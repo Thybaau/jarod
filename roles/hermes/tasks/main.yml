@@ -1,0 +1,24 @@
+---
+# Rôle hermes — Orchestration des tasks
+# Seule la gestion des secrets est active pour l'instant (Story 1.3)
+# Les autres tasks seront ajoutées dans les stories 2.1, 2.2, 2.3
+
+- name: Déployer les secrets (.env)
+  ansible.builtin.include_tasks: secrets.yml
+  tags: [hermes, secrets]
+
+# - name: Installer Hermes Agent            # Story 2.1
+#   ansible.builtin.include_tasks: install.yml
+#   tags: [hermes, install]
+
+# - name: Configurer Hermes (config.yaml)   # Story 2.2
+#   ansible.builtin.include_tasks: config.yml
+#   tags: [hermes, config]
+
+# - name: Déployer la persona (SOUL.md)     # Story 2.3
+#   ansible.builtin.include_tasks: soul.yml
+#   tags: [hermes, soul]
+
+# - name: Configurer le service systemd     # Story 2.1
+#   ansible.builtin.include_tasks: systemd.yml
+#   tags: [hermes, systemd]

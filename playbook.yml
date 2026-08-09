@@ -10,7 +10,7 @@
   roles:
     - role: system
       tags: [system]
-    # - role: hermes        # Story 2.1
-    #   tags: [hermes]
+    - role: hermes
+      tags: [hermes]
     # - role: kubernetes    # Story 3.2
     #   tags: [kubernetes]
