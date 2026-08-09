@@ -1,0 +1,16 @@
+---
+# Playbook principal — Configuration VM JAROD
+# Exécution : ansible-playbook -i inventory.ini playbook.yml [--tags system|hermes|kubernetes]
+
+- name: Configurer la VM JAROD
+  hosts: jarod
+  any_errors_fatal: true
+  become: true
+
+  roles:
+    - role: system
+      tags: [system]
+    # - role: hermes        # Story 2.1
+    #   tags: [hermes]
+    # - role: kubernetes    # Story 3.2
+    #   tags: [kubernetes]

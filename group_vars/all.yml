@@ -1,0 +1,40 @@
+---
+# Variables globales — VM JAROD
+# Toutes les IPs et ports sont centralisés ici — jamais hardcodés dans les tasks
+
+# === Identité VM ===
+jarod_user: jarod
+jarod_home: /home/jarod
+
+# === Réseau ===
+jarod_vm_ip: "192.168.1.150"
+lan_subnet: "192.168.1.0/24"
+traefik_ip: "192.168.1.151"
+k8s_master_ip: "192.168.1.102"
+k8s_api_port: 6443
+home_assistant_port: 8123
+hermes_dashboard_port: 9119
+
+# === UFW — Règles entrantes ===
+ufw_allow_in:
+  - { rule: "allow", port: "22", proto: "tcp", from: "{{ lan_subnet }}", comment: "SSH depuis LAN" }
+  - { rule: "allow", port: "{{ hermes_dashboard_port }}", proto: "tcp", from: "{{ traefik_ip }}", comment: "Dashboard depuis Traefik" }
+
+# === UFW — Règles sortantes ===
+ufw_allow_out:
+  - { rule: "allow", port: "53", proto: "any", to: "any", comment: "DNS" }
+  - { rule: "allow", port: "443", proto: "tcp", to: "any", comment: "HTTPS (Discord, DeepSeek, OpenRouter, GitHub, npm)" }
+  - { rule: "allow", port: "{{ k8s_api_port }}", proto: "tcp", to: "{{ k8s_master_ip }}", comment: "K8s API" }
+  - { rule: "allow", port: "{{ home_assistant_port }}", proto: "tcp", to: "{{ lan_subnet }}", comment: "Home Assistant" }
+
+# === Packages système ===
+system_packages:
+  - curl
+  - git
+  - build-essential
+  - chrony
+  - ufw
+
+# === Clé SSH publique ===
+# Injectée via --extra-vars ou variable d'environnement
+# jarod_ssh_public_key: "ssh-ed25519 AAAA..."

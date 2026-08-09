@@ -1,0 +1,48 @@
+---
+# Configuration du firewall UFW
+# Ordre critique : reset → policies → règles allow → activation
+# Ne JAMAIS activer UFW avant d'avoir ajouté la règle SSH (lockout garanti)
+
+- name: Reset UFW pour un état propre
+  community.general.ufw:
+    state: reset
+
+- name: Politique par défaut — deny incoming
+  community.general.ufw:
+    default: deny
+    direction: incoming
+
+- name: Politique par défaut — deny outgoing
+  community.general.ufw:
+    default: deny
+    direction: outgoing
+
+- name: Configurer les règles UFW entrantes
+  community.general.ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    from_ip: "{{ item.from }}"
+    direction: in
+    comment: "{{ item.comment }}"
+  loop: "{{ ufw_allow_in }}"
+  loop_control:
+    label: "{{ item.comment }}"
+  notify: Reload ufw
+
+- name: Configurer les règles UFW sortantes
+  community.general.ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    to: "{{ item.to }}"
+    direction: out
+    comment: "{{ item.comment }}"
+  loop: "{{ ufw_allow_out }}"
+  loop_control:
+    label: "{{ item.comment }}"
+  notify: Reload ufw
+
+- name: Activer UFW
+  community.general.ufw:
+    state: enabled

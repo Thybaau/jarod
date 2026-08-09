@@ -1,0 +1,6 @@
+---
+# Handlers du rôle system
+
+- name: Reload ufw
+  community.general.ufw:
+    state: reloaded

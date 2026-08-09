@@ -1,0 +1,26 @@
+---
+# Installation des packages système et configuration NTP
+
+- name: Mettre à jour le cache apt
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  retries: 3
+  delay: 5
+  register: apt_cache_result
+  until: apt_cache_result is success
+
+- name: Installer les packages système requis
+  ansible.builtin.apt:
+    name: "{{ system_packages }}"
+    state: present
+  retries: 3
+  delay: 5
+  register: apt_install_result
+  until: apt_install_result is success
+
+- name: Activer et démarrer chrony (NTP)
+  ansible.builtin.systemd:
+    name: chrony
+    enabled: true
+    state: started

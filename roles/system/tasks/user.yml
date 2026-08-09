@@ -1,0 +1,35 @@
+---
+# Création et configuration de l'utilisateur jarod
+
+- name: Créer l'utilisateur {{ jarod_user }}
+  ansible.builtin.user:
+    name: "{{ jarod_user }}"
+    shell: /bin/bash
+    home: "{{ jarod_home }}"
+    create_home: true
+    state: present
+
+- name: Créer le répertoire .ssh
+  ansible.builtin.file:
+    path: "{{ jarod_home }}/.ssh"
+    state: directory
+    owner: "{{ jarod_user }}"
+    group: "{{ jarod_user }}"
+    mode: "0700"
+
+- name: Déployer la clé SSH publique
+  ansible.posix.authorized_key:
+    user: "{{ jarod_user }}"
+    key: "{{ jarod_ssh_public_key }}"
+    state: present
+  when: jarod_ssh_public_key is defined
+
+- name: Configurer sudo NOPASSWD pour {{ jarod_user }}
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/{{ jarod_user }}
+    line: "{{ jarod_user }} ALL=(ALL) NOPASSWD: ALL"
+    create: true
+    owner: root
+    group: root
+    mode: "0440"
+    validate: "visudo -cf %s"

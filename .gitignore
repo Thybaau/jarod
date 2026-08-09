@@ -1,0 +1,12 @@
+# Secrets
+.env
+*.vault_pass
+vault_password_file
+
+# Ansible
+*.retry
+__pycache__/
+
+# OS
+.DS_Store
+*.swp

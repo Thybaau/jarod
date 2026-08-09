@@ -1,0 +1,20 @@
+---
+# Valeurs par défaut du rôle system
+# Peuvent être surchargées par group_vars/all.yml ou --extra-vars
+
+# Packages système à installer
+system_packages:
+  - curl
+  - git
+  - build-essential
+  - chrony
+  - ufw
+
+# Utilisateur système
+jarod_user: jarod
+jarod_home: /home/jarod
+
+# Ports UFW (valeurs par défaut)
+hermes_dashboard_port: 9119
+k8s_api_port: 6443
+home_assistant_port: 8123
