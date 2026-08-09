@@ -44,5 +44,6 @@
   notify: Reload ufw
 
 - name: Activer UFW
-  community.general.ufw:
-    state: enabled
+  ansible.builtin.command:
+    cmd: ufw --force enable
+  changed_when: true
