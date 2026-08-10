@@ -1,15 +1,16 @@
 ---
 # Rôle system — Orchestration des tasks
-# Ordre d'exécution : utilisateur → packages → firewall
+# Ordre d'exécution : utilisateur → firewall → packages
+# UFW doit être configuré AVANT apt pour autoriser le trafic HTTP/HTTPS sortant
 
 - name: Inclure les tasks de création utilisateur
   ansible.builtin.include_tasks: user.yml
   tags: [system, user]
 
-- name: Inclure les tasks d'installation des packages
-  ansible.builtin.include_tasks: packages.yml
-  tags: [system, packages]
-
 - name: Inclure les tasks de configuration UFW
   ansible.builtin.include_tasks: ufw.yml
   tags: [system, ufw]
+
+- name: Inclure les tasks d'installation des packages
+  ansible.builtin.include_tasks: packages.yml
+  tags: [system, packages]
