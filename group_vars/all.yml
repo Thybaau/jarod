@@ -23,6 +23,7 @@ ufw_allow_in:
 # === UFW — Règles sortantes ===
 ufw_allow_out:
   - { rule: "allow", port: "53", proto: "any", to: "any", comment: "DNS" }
+  - { rule: "allow", port: "80", proto: "tcp", to: "any", comment: "HTTP (apt repositories)" }
   - { rule: "allow", port: "443", proto: "tcp", to: "any", comment: "HTTPS (Discord, DeepSeek, OpenRouter, GitHub, npm)" }
   - { rule: "allow", port: "{{ k8s_api_port }}", proto: "tcp", to: "{{ k8s_master_ip }}", comment: "K8s API" }
   - { rule: "allow", port: "{{ home_assistant_port }}", proto: "tcp", to: "{{ lan_subnet }}", comment: "Home Assistant" }
