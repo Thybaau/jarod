@@ -26,7 +26,8 @@
 
 - name: Installer Hermes Agent via l'installeur officiel
   ansible.builtin.shell:
-    cmd: "curl -fsSL {{ hermes_install_script_url }} | bash -s -- --skip-browser"
+    cmd: "curl -fsSL {{ hermes_install_script_url }} | bash -s -- --skip-browser 2>&1 | tee /tmp/hermes-install.log"
+    stdin: ""
   args:
     creates: "{{ hermes_install_dir }}/venv/bin/hermes"
   become: true
@@ -34,7 +35,10 @@
   environment:
     HOME: "{{ hermes_home }}"
     PATH: "{{ hermes_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+    HERMES_NO_WIZARD: "1"
+    CI: "true"
   when: not hermes_installed.stat.exists
+  timeout: 900
   retries: 3
   delay: 10
   register: hermes_install_result
