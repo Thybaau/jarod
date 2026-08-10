@@ -1,6 +1,6 @@
 ---
 # Rôle hermes — Orchestration des tasks
-# Ordre : secrets → install → systemd (config et soul viendront en 2.2 et 2.3)
+# Ordre : secrets → install → config → systemd
 
 - name: Déployer les secrets (.env)
   ansible.builtin.include_tasks: secrets.yml
@@ -10,9 +10,9 @@
   ansible.builtin.include_tasks: install.yml
   tags: [hermes, install]
 
-# - name: Configurer Hermes (config.yaml)   # Story 2.2
-#   ansible.builtin.include_tasks: config.yml
-#   tags: [hermes, config]
+- name: Configurer Hermes (config.yaml)
+  ansible.builtin.include_tasks: config.yml
+  tags: [hermes, config]
 
 # - name: Déployer la persona (SOUL.md)     # Story 2.3
 #   ansible.builtin.include_tasks: soul.yml

@@ -1,0 +1,21 @@
+---
+# Déploiement de la configuration Hermes Agent (config.yaml)
+
+- name: Créer le répertoire de données Hermes
+  ansible.builtin.file:
+    path: "{{ hermes_data_dir }}"
+    state: directory
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0755"
+  become: true
+
+- name: Déployer la configuration Hermes (config.yaml)
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: "{{ hermes_config_file }}"
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0600"
+  become: true
+  notify: Restart hermes-gateway

@@ -1,7 +1,5 @@
 ---
 # Déploiement du service systemd hermes-gateway
-# Le service est enabled mais PAS started — le démarrage sera déclenché
-# en story 2.2 quand config.yaml sera en place
 
 - name: Déployer le service unit hermes-gateway
   ansible.builtin.template:
@@ -18,12 +16,9 @@
     daemon_reload: true
   become: true
 
-- name: Activer le service hermes-gateway (sans démarrer)
+- name: Activer et démarrer le service hermes-gateway
   ansible.builtin.systemd:
     name: "{{ hermes_service_name }}"
     enabled: true
+    state: started
   become: true
-  # Note : le service n'est PAS démarré ici volontairement.
-  # Sans config.yaml (story 2.2), Hermes échouerait au boot.
-  # Le handler 'Restart hermes-gateway' sera déclenché par la story 2.2
-  # lors du déploiement de la configuration.

@@ -14,6 +14,20 @@ hermes_bin: "{{ hermes_home }}/.local/bin/hermes"
 hermes_data_dir: "{{ hermes_home }}/.hermes"
 hermes_skip_browser: true
 
+# === Configuration LLM ===
+hermes_config_file: "{{ hermes_data_dir }}/config.yaml"
+hermes_model_provider: "deepseek"
+hermes_model_default: "deepseek-v4-flash"
+
+# === Fallback LLM ===
+hermes_fallback_provider: "openrouter"
+hermes_fallback_model: "deepseek/deepseek-v4-flash"
+
+# === Compression du contexte ===
+hermes_compression_enabled: true
+hermes_compression_threshold: 0.50
+hermes_compression_target_ratio: 0.20
+
 # === Service systemd ===
 hermes_service_name: hermes-gateway
 hermes_service_file: "/etc/systemd/system/hermes-gateway.service"

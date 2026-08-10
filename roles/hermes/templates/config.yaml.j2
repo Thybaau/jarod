@@ -1,0 +1,19 @@
+# Configuration Hermes Agent — JAROD
+# Déployé via Ansible (template config.yaml.j2)
+# Ne pas modifier directement — les changements seront écrasés au prochain déploiement
+
+# === Provider LLM principal ===
+model:
+  provider: "{{ hermes_model_provider }}"
+  default: "{{ hermes_model_default }}"
+
+# === Chaîne de fallback ===
+fallback_providers:
+  - provider: "{{ hermes_fallback_provider }}"
+    model: "{{ hermes_fallback_model }}"
+
+# === Compression du contexte ===
+compression:
+  enabled: {{ hermes_compression_enabled | lower }}
+  threshold: {{ hermes_compression_threshold }}
+  target_ratio: {{ hermes_compression_target_ratio }}
