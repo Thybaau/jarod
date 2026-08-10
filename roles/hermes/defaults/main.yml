@@ -4,7 +4,7 @@
 # === Identité utilisateur ===
 hermes_user: "{{ jarod_user }}"
 hermes_home: "{{ jarod_home }}"
-hermes_env_file: "{{ jarod_home }}/.env"
+hermes_env_file: "{{ jarod_home }}/.hermes/.env"
 hermes_env_mode: "0600"
 
 # === Installation Hermes ===
