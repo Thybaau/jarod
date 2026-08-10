@@ -1,0 +1,102 @@
+---
+name: Deploy JAROD
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "roles/**"
+      - "group_vars/**"
+      - "playbook.yml"
+      - "inventory.ini"
+      - "ansible.cfg"
+      - "requirements.yml"
+      - "requirements-python.txt"
+      - ".github/workflows/deploy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy JAROD via Ansible
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Python environment
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements-python.txt
+          ansible --version
+          echo "VIRTUAL_ENV=${GITHUB_WORKSPACE}/.venv" >> $GITHUB_ENV
+          echo "${GITHUB_WORKSPACE}/.venv/bin" >> $GITHUB_PATH
+
+      - name: Install Ansible collections
+        run: |
+          source .venv/bin/activate
+          ansible-galaxy collection install -r requirements.yml
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.JAROD_SSH_PRIVATE_KEY }}" > ~/.ssh/jarod_deploy_key
+          chmod 600 ~/.ssh/jarod_deploy_key
+
+          cat >> ~/.ssh/config <<EOF
+          Host 192.168.1.150 jarod-vm
+            User jarod
+            IdentityFile ~/.ssh/jarod_deploy_key
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+
+          echo "✓ SSH key configured for JAROD VM"
+
+      - name: Test SSH connectivity
+        run: |
+          source .venv/bin/activate
+          echo "Testing SSH connectivity to JAROD VM..."
+          ansible jarod -i inventory.ini -m ping
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+
+      - name: Run Ansible playbook
+        run: |
+          source .venv/bin/activate
+          set -e
+          echo "Starting Ansible playbook execution..."
+          if ! ansible-playbook -i inventory.ini playbook.yml \
+            --extra-vars "deepseek_api_key=$DEEPSEEK_API_KEY" \
+            --extra-vars "openrouter_api_key=${OPENROUTER_API_KEY:-}" \
+            --extra-vars "discord_bot_token=$DISCORD_BOT_TOKEN" \
+            --extra-vars "github_token=$CI_TOKEN_JAROD" \
+            --extra-vars "jarod_sa_token=$JAROD_K8S_SA_TOKEN" \
+            --extra-vars "k8s_ca_data=$K8S_CA_DATA"; then
+            echo "::error::Ansible playbook execution failed"
+            exit 1
+          fi
+          echo "✓ Ansible playbook completed successfully"
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          CI_TOKEN_JAROD: ${{ secrets.CI_TOKEN_JAROD }}
+          JAROD_K8S_SA_TOKEN: ${{ secrets.JAROD_K8S_SA_TOKEN }}
+          K8S_CA_DATA: ${{ secrets.K8S_CA_DATA }}
+
+      - name: Cleanup SSH key and virtual env
+        if: always()
+        run: |
+          rm -f ~/.ssh/jarod_deploy_key
+          sed -i '/Host 192.168.1.150 jarod-vm/,/UserKnownHostsFile/d' ~/.ssh/config 2>/dev/null || true
+          rm -rf .venv
+          echo "✓ SSH key and virtual environment cleaned up"
