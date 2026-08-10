@@ -1,8 +1,23 @@
 ---
 # Valeurs par défaut — rôle hermes
-# Variables liées aux secrets et à l'environnement
 
+# === Identité utilisateur ===
 hermes_user: "{{ jarod_user }}"
 hermes_home: "{{ jarod_home }}"
 hermes_env_file: "{{ jarod_home }}/.env"
 hermes_env_mode: "0600"
+
+# === Installation Hermes ===
+hermes_install_script_url: "https://hermes-agent.nousresearch.com/install.sh"
+hermes_install_dir: "{{ hermes_home }}/.hermes/hermes-agent"
+hermes_bin: "{{ hermes_home }}/.local/bin/hermes"
+hermes_data_dir: "{{ hermes_home }}/.hermes"
+hermes_skip_browser: true
+
+# === Service systemd ===
+hermes_service_name: hermes-gateway
+hermes_service_file: "/etc/systemd/system/hermes-gateway.service"
+hermes_gateway_command: "gateway run"
+hermes_restart_sec: 10
+hermes_watchdog_sec: 300
+hermes_memory_max: "2G"

@@ -34,6 +34,7 @@ system_packages:
   - build-essential
   - chrony
   - ufw
+  - xz-utils
 
 # === Clé SSH publique ===
 # Injectée via --extra-vars ou variable d'environnement

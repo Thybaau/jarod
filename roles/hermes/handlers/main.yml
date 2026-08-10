@@ -1,12 +1,9 @@
 ---
 # Handlers du rôle hermes
-# Le handler restart est un placeholder — le service systemd sera créé en story 2.1
 
 - name: Restart hermes-gateway
   ansible.builtin.systemd:
-    name: hermes-gateway
+    name: "{{ hermes_service_name }}"
     state: restarted
     daemon_reload: true
   become: true
-  # Note : ce handler sera fonctionnel uniquement après la story 2.1
-  # qui crée le service systemd hermes-gateway.service

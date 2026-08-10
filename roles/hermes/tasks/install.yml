@@ -1,0 +1,60 @@
+---
+# Installation de Hermes Agent via l'installeur officiel
+# Exécuté en tant que l'utilisateur jarod (installation per-user)
+# Prérequis : git, curl déjà installés par le rôle system ; xz-utils ajouté ici
+
+- name: Installer les prérequis système pour Hermes (xz-utils)
+  ansible.builtin.apt:
+    name:
+      - xz-utils
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+  retries: 3
+  delay: 10
+  register: apt_result
+  until: apt_result is success
+
+- name: Vérifier si Hermes Agent est déjà installé
+  ansible.builtin.stat:
+    path: "{{ hermes_install_dir }}/venv/bin/hermes"
+  register: hermes_installed
+  become: true
+  become_user: "{{ hermes_user }}"
+  changed_when: false
+
+- name: Installer Hermes Agent via l'installeur officiel
+  ansible.builtin.shell:
+    cmd: "curl -fsSL {{ hermes_install_script_url }} | bash -s -- --skip-browser"
+  args:
+    creates: "{{ hermes_install_dir }}/venv/bin/hermes"
+  become: true
+  become_user: "{{ hermes_user }}"
+  environment:
+    HOME: "{{ hermes_home }}"
+    PATH: "{{ hermes_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  when: not hermes_installed.stat.exists
+  retries: 3
+  delay: 10
+  register: hermes_install_result
+  until: hermes_install_result is success or hermes_install_result is skipped
+
+- name: Valider l'installation Hermes (hermes doctor)
+  ansible.builtin.command:
+    cmd: "{{ hermes_bin }} doctor"
+  become: true
+  become_user: "{{ hermes_user }}"
+  environment:
+    HOME: "{{ hermes_home }}"
+    PATH: "{{ hermes_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  changed_when: false
+  register: hermes_doctor_result
+  failed_when: hermes_doctor_result.rc != 0
+
+- name: Activer le linger pour l'utilisateur jarod (survie aux logouts)
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ hermes_user }}"
+  become: true
+  register: linger_result
+  changed_when: linger_result.rc == 0

@@ -1,0 +1,38 @@
+# {{ ansible_managed }}
+# Service systemd pour Hermes Agent gateway — JAROD
+
+[Unit]
+Description=Hermes Agent gateway — JAROD
+Documentation=https://hermes-agent.nousresearch.com/docs
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ hermes_user }}
+Group={{ hermes_user }}
+WorkingDirectory={{ hermes_home }}
+Environment="HOME={{ hermes_home }}"
+Environment="PATH={{ hermes_home }}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+EnvironmentFile={{ hermes_env_file }}
+ExecStart={{ hermes_bin }} {{ hermes_gateway_command }}
+Restart=on-failure
+RestartSec={{ hermes_restart_sec }}
+WatchdogSec={{ hermes_watchdog_sec }}
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hermes-gateway
+
+# Contraintes de ressources (NFR15 : RAM < 2 Go)
+MemoryMax={{ hermes_memory_max }}
+CPUQuota=200%
+
+# Hardening minimal
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{ hermes_home }}/.hermes
+
+[Install]
+WantedBy=multi-user.target
