@@ -58,13 +58,13 @@
 
 - name: Installer les dépendances optionnelles Discord (discord.py)
   ansible.builtin.command:
-    cmd: "{{ hermes_install_dir }}/venv/bin/pip install discord.py>=2.3"
+    cmd: "{{ hermes_home }}/.hermes/bin/uv pip install --python {{ hermes_install_dir }}/venv/bin/python discord.py>=2.3"
   become: true
   become_user: "{{ hermes_user }}"
   environment:
     HOME: "{{ hermes_home }}"
   register: pip_discord_result
-  changed_when: "'Successfully installed' in pip_discord_result.stdout"
+  changed_when: "'Installed' in pip_discord_result.stdout"
 
 - name: Activer le linger pour l'utilisateur jarod (survie aux logouts)
   ansible.builtin.command:
