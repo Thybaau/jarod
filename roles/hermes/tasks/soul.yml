@@ -20,10 +20,10 @@
     HOME: "{{ hermes_home }}"
     PATH: "{{ hermes_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
   register: plugin_install_result
-  changed_when: "'already installed' not in plugin_install_result.stdout"
+  changed_when: "'already' not in plugin_install_result.stdout"
   failed_when: >
     plugin_install_result.rc != 0 and
-    'already installed' not in plugin_install_result.stdout
+    'already' not in plugin_install_result.stdout
 
 - name: Déployer les patterns de commandes dangereuses
   ansible.builtin.copy:
