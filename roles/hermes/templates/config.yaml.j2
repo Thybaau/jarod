@@ -36,6 +36,21 @@ security:
 discord:
   auto_thread: {{ hermes_discord_auto_thread | lower }}
   reactions: {{ hermes_discord_reactions | lower }}
+{% if hermes_discord_free_response_channels %}
+  free_response_channels: "{{ hermes_discord_free_response_channels }}"
+{% endif %}
+
+# === Canal home Discord ===
+{% if hermes_discord_home_channel_id %}
+platforms:
+  discord:
+    enabled: true
+    home_channel:
+      platform: discord
+      chat_id: '{{ hermes_discord_home_channel_id }}'
+      name: '{{ hermes_discord_home_channel_name }}'
+      scope_id: '{{ hermes_discord_server_id }}'
+{% endif %}
 
 # === Sessions ===
 group_sessions_per_user: true

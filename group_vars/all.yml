@@ -40,3 +40,9 @@ system_packages:
 # === Clé SSH publique ===
 # Injectée via --extra-vars ou variable d'environnement
 # jarod_ssh_public_key: "ssh-ed25519 AAAA..."
+
+# === Discord — Salons ===
+hermes_discord_free_response_channels: "1536673900983881818"  # ID du salon #jarod
+hermes_discord_home_channel_id: "1536673900983881818"         # Salon principal #jarod
+hermes_discord_home_channel_name: "J.A.R.O.D. home / #jarod"
+hermes_discord_server_id: "1465752668994666801"               # ID du serveur Discord

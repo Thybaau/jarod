@@ -56,7 +56,11 @@ hermes_watchdog_sec: 300
 hermes_memory_max: "2G"
 
 # === Discord Gateway ===
-hermes_discord_require_mention: false
+hermes_discord_require_mention: true
 hermes_discord_auto_thread: true
 hermes_discord_home_channel: ""
+hermes_discord_free_response_channels: ""
 hermes_discord_reactions: true
+hermes_discord_home_channel_id: ""
+hermes_discord_home_channel_name: ""
+hermes_discord_server_id: ""
