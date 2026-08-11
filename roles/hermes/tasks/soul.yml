@@ -1,0 +1,36 @@
+---
+# Déploiement de la persona JAROD (SOUL.md) et configuration sécurité
+
+- name: Déployer la persona JAROD (SOUL.md)
+  ansible.builtin.template:
+    src: soul.md.j2
+    dest: "{{ hermes_soul_file }}"
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0644"
+  become: true
+  notify: Restart hermes-gateway
+
+- name: Installer le plugin custom-dangerous-patterns
+  ansible.builtin.command:
+    cmd: "{{ hermes_bin }} plugins install scross01/hermes-custom-dangerous-patterns-plugin --enable"
+  become: true
+  become_user: "{{ hermes_user }}"
+  environment:
+    HOME: "{{ hermes_home }}"
+    PATH: "{{ hermes_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  register: plugin_install_result
+  changed_when: "'already installed' not in plugin_install_result.stdout"
+  failed_when: >
+    plugin_install_result.rc != 0 and
+    'already installed' not in plugin_install_result.stdout
+
+- name: Déployer les patterns de commandes dangereuses
+  ansible.builtin.copy:
+    src: dangerous_command_patterns.yaml
+    dest: "{{ hermes_data_dir }}/custom-dangerous-patterns.yaml"
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0644"
+  become: true
+  notify: Restart hermes-gateway

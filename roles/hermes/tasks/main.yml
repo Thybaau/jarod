@@ -14,9 +14,9 @@
   ansible.builtin.include_tasks: config.yml
   tags: [hermes, config]
 
-# - name: Déployer la persona (SOUL.md)     # Story 2.3
-#   ansible.builtin.include_tasks: soul.yml
-#   tags: [hermes, soul]
+- name: Déployer la persona (SOUL.md)
+  ansible.builtin.include_tasks: soul.yml
+  tags: [hermes, soul]
 
 - name: Configurer le service systemd
   ansible.builtin.include_tasks: systemd.yml

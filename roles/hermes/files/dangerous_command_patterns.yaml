@@ -1,0 +1,79 @@
+# Patterns de commandes dangereuses — JAROD
+# Déployé via Ansible (files/dangerous_command_patterns.yaml)
+# Format: plugin hermes-custom-dangerous-patterns
+
+patterns:
+  # === kubectl destructifs (au-delà du RBAC Phase 1) ===
+  - pattern: '\bkubectl\s+delete\s+namespace\b'
+    description: 'Suppression de namespace Kubernetes'
+    enabled: true
+    group: kubernetes
+
+  - pattern: '\bkubectl\s+delete\s+(deploy|deployment|statefulset|daemonset|service)\b'
+    description: 'Suppression de workload Kubernetes'
+    enabled: true
+    group: kubernetes
+
+  - pattern: '\bkubectl\s+(drain|cordon)\b'
+    description: 'Drain ou cordon de noeud Kubernetes'
+    enabled: true
+    group: kubernetes
+
+  - pattern: '\bkubectl\s+delete\s+node\b'
+    description: 'Suppression de noeud Kubernetes'
+    enabled: true
+    group: kubernetes
+
+  - pattern: '\bkubectl\s+exec\b.*\b(rm|dd|mkfs)\b'
+    description: 'Commande destructive dans un pod via exec'
+    enabled: true
+    group: kubernetes
+
+  # === Accès fichiers sensibles VM ===
+  - pattern: '\b(cat|less|more|head|tail|grep)\s+.*(/home/jarod/\.env|\.kube/config)'
+    description: 'Lecture de fichiers contenant des secrets'
+    enabled: true
+    group: secrets
+
+  - pattern: '\b(cat|less|more|head|tail)\s+.*/etc/(shadow|passwd|sudoers)'
+    description: 'Lecture de fichiers système sensibles'
+    enabled: true
+    group: system
+
+  # === Infrastructure JAROD ===
+  - pattern: '\bsystemctl\s+(stop|disable|mask)\s+hermes'
+    description: 'Arrêt ou désactivation du service JAROD'
+    enabled: true
+    group: infrastructure
+
+  - pattern: '\bufw\s+(disable|reset)\b'
+    description: 'Désactivation du firewall'
+    enabled: true
+    group: infrastructure
+
+  - pattern: '\brm\s+(-rf?\s+)?/home/jarod/\.hermes\b'
+    description: 'Suppression du répertoire de données Hermes'
+    enabled: true
+    group: infrastructure
+
+  - pattern: '\brm\s+(-rf?\s+)?/home/jarod/\.kube\b'
+    description: 'Suppression du kubeconfig'
+    enabled: true
+    group: infrastructure
+
+# Patterns exemptés (read-only safe)
+allow_patterns:
+  - pattern: '\bkubectl\s+(get|describe|logs|top|explain)\b'
+    description: 'Commandes kubectl en lecture seule'
+    enabled: true
+    group: kubernetes
+
+  - pattern: '\bkubectl\s+config\s+(view|current-context|get-contexts)\b'
+    description: 'Commandes kubectl config en lecture'
+    enabled: true
+    group: kubernetes
+
+  - pattern: '\bsystemctl\s+status\s+hermes'
+    description: 'Vérification du statut du service'
+    enabled: true
+    group: infrastructure

@@ -28,6 +28,25 @@ hermes_compression_enabled: true
 hermes_compression_threshold: 0.50
 hermes_compression_target_ratio: 0.20
 
+# === Persona JAROD ===
+hermes_soul_file: "{{ hermes_data_dir }}/SOUL.md"
+hermes_operator_title: "Monsieur"
+
+# === Sécurité et approbations ===
+hermes_approvals_mode: "manual"
+hermes_approvals_timeout: 300
+hermes_approvals_cron_mode: "deny"
+hermes_approvals_deny:
+  - "kubectl delete namespace *"
+  - "kubectl drain *"
+  - "kubectl cordon *"
+  - "kubectl delete node *"
+  - "systemctl stop hermes*"
+  - "systemctl disable hermes*"
+  - "ufw disable"
+  - "rm -rf /home/jarod/.hermes*"
+  - "rm -rf /home/jarod/.kube*"
+
 # === Service systemd ===
 hermes_service_name: hermes-gateway
 hermes_service_file: "/etc/systemd/system/hermes-gateway.service"

@@ -17,3 +17,17 @@ compression:
   enabled: {{ hermes_compression_enabled | lower }}
   threshold: {{ hermes_compression_threshold }}
   target_ratio: {{ hermes_compression_target_ratio }}
+
+# === Sécurité et approbations ===
+approvals:
+  mode: "{{ hermes_approvals_mode }}"
+  timeout: {{ hermes_approvals_timeout }}
+  cron_mode: "{{ hermes_approvals_cron_mode }}"
+  deny:
+{% for pattern in hermes_approvals_deny %}
+    - '{{ pattern }}'
+{% endfor %}
+
+# === Sécurité réseau ===
+security:
+  allow_private_urls: true
