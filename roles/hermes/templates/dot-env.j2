@@ -10,3 +10,11 @@ DEEPSEEK_API_KEY={{ deepseek_api_key }}
 OPENROUTER_API_KEY={{ openrouter_api_key }}
 DISCORD_BOT_TOKEN={{ discord_bot_token }}
 GITHUB_TOKEN={{ github_token }}
+
+# === Discord Gateway ===
+DISCORD_ALLOWED_USERS={{ discord_allowed_users }}
+DISCORD_REQUIRE_MENTION={{ hermes_discord_require_mention | lower }}
+DISCORD_AUTO_THREAD={{ hermes_discord_auto_thread | lower }}
+{% if hermes_discord_home_channel %}
+DISCORD_HOME_CHANNEL={{ hermes_discord_home_channel }}
+{% endif %}
