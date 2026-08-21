@@ -69,6 +69,7 @@ hermes_discord_server_id: ""
 hermes_stt_provider: "local"
 hermes_stt_language: "fr"
 hermes_stt_local_model: "small"
+hermes_stt_initial_prompt: "JAROD"
 
 # === Voice — Text-to-Speech ===
 hermes_tts_provider: "edge"

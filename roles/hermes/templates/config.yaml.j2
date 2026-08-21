@@ -64,6 +64,9 @@ stt:
   local:
     model: "{{ hermes_stt_local_model }}"
     language: "{{ hermes_stt_language }}"
+{% if hermes_stt_initial_prompt %}
+    initial_prompt: "{{ hermes_stt_initial_prompt }}"
+{% endif %}
 
 # === Text-to-Speech (synthèse vocale) ===
 tts:
