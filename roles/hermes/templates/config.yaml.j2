@@ -32,6 +32,11 @@ approvals:
 security:
   allow_private_urls: true
 
+# === Recherche web ===
+web:
+  search_backend: tavily
+  extract_backend: tavily
+
 # === Gateway Discord ===
 discord:
   auto_thread: {{ hermes_discord_auto_thread | lower }}
@@ -54,3 +59,4 @@ platforms:
 
 # === Sessions ===
 group_sessions_per_user: true
+
