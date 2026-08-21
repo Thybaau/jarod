@@ -30,9 +30,7 @@ CPUQuota=200%
 # Hardening minimal
 NoNewPrivileges=true
 PrivateTmp=true
-ProtectSystem=strict
-ProtectHome=read-only
-ReadWritePaths={{ hermes_home }}/.hermes {{ hermes_home }}/.local {{ hermes_home }}/.cache
+ProtectSystem=full
 
 [Install]
 WantedBy=multi-user.target
