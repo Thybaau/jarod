@@ -56,15 +56,18 @@
   register: hermes_doctor_result
   failed_when: hermes_doctor_result.rc != 0
 
-- name: Installer les dépendances optionnelles Discord (discord.py)
+- name: Installer les extras Python messaging/voice (discord.py[voice], PyNaCl)
   ansible.builtin.command:
-    cmd: "{{ hermes_home }}/.hermes/bin/uv pip install --python {{ hermes_install_dir }}/venv/bin/python discord.py>=2.3"
+    cmd: "{{ hermes_home }}/.hermes/bin/uv pip install --python {{ hermes_install_dir }}/venv/bin/python -e '.[messaging]'"
+    chdir: "{{ hermes_install_dir }}"
   become: true
   become_user: "{{ hermes_user }}"
   environment:
     HOME: "{{ hermes_home }}"
-  register: pip_discord_result
-  changed_when: "'Installed' in pip_discord_result.stdout"
+  register: messaging_install_result
+  changed_when: "'Installed' in messaging_install_result.stdout or 'Updated' in messaging_install_result.stdout"
+  notify: Restart hermes-gateway
+  tags: [hermes, install, voice]
 
 - name: Activer le linger pour l'utilisateur jarod (survie aux logouts)
   ansible.builtin.command:

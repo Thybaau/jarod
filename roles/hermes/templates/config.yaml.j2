@@ -57,6 +57,22 @@ platforms:
       scope_id: '{{ hermes_discord_server_id }}'
 {% endif %}
 
+# === Speech-to-Text (transcription vocale) ===
+stt:
+  provider: "{{ hermes_stt_provider }}"
+  language: "{{ hermes_stt_language }}"
+  local:
+    model: "{{ hermes_stt_local_model }}"
+    language: "{{ hermes_stt_language }}"
+
+# === Text-to-Speech (synthèse vocale) ===
+tts:
+  provider: "{{ hermes_tts_provider }}"
+  speed: {{ hermes_tts_speed | float }}
+  edge:
+    voice: "{{ hermes_tts_edge_voice }}"
+    speed: {{ hermes_tts_speed | float }}
+
 # === Sessions ===
 group_sessions_per_user: true
 

@@ -9,6 +9,8 @@ system_packages:
   - build-essential
   - chrony
   - ufw
+  - ffmpeg             # Conversion audio (requis par Hermes pour STT/TTS)
+  - libopus0           # Codec Opus pour Discord voice channels
 
 # Utilisateur système
 jarod_user: jarod

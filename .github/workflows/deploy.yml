@@ -81,6 +81,7 @@ jobs:
             --extra-vars "github_token=$CI_TOKEN_JAROD" \
             --extra-vars "discord_allowed_users=$DISCORD_ALLOWED_USERS" \
             --extra-vars "tavily_api_key=$TAVILY_API_KEY" \
+            --extra-vars "groq_api_key=${GROQ_API_KEY:-}" \
             --extra-vars "jarod_sa_token=$JAROD_K8S_SA_TOKEN" \
             --extra-vars "k8s_ca_data=$K8S_CA_DATA"; then
             echo "::error::Ansible playbook execution failed"
@@ -94,6 +95,7 @@ jobs:
           CI_TOKEN_JAROD: ${{ secrets.CI_TOKEN_JAROD }}
           DISCORD_ALLOWED_USERS: ${{ secrets.DISCORD_ALLOWED_USERS }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           JAROD_K8S_SA_TOKEN: ${{ secrets.JAROD_K8S_SA_TOKEN }}
           K8S_CA_DATA: ${{ secrets.K8S_CA_DATA }}
 

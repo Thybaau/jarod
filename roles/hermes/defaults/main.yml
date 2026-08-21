@@ -64,3 +64,13 @@ hermes_discord_reactions: true
 hermes_discord_home_channel_id: ""
 hermes_discord_home_channel_name: ""
 hermes_discord_server_id: ""
+
+# === Voice — Speech-to-Text ===
+hermes_stt_provider: "local"
+hermes_stt_language: "fr"
+hermes_stt_local_model: "small"
+
+# === Voice — Text-to-Speech ===
+hermes_tts_provider: "edge"
+hermes_tts_speed: 1.0
+hermes_tts_edge_voice: "fr-FR-HenriNeural"
