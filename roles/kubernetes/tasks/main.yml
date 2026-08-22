@@ -1,0 +1,11 @@
+---
+# Rôle kubernetes — Orchestration des tasks
+# Ordre d'exécution : validation secrets → kubectl → kubeconfig → vérification → connectivité
+
+- name: Inclure les tasks de validation et déploiement kubeconfig
+  ansible.builtin.include_tasks: kubeconfig.yml
+  tags: [kubernetes, kubeconfig]
+
+- name: Inclure les tasks de test de connectivité
+  ansible.builtin.include_tasks: connectivity.yml
+  tags: [kubernetes, connectivity]

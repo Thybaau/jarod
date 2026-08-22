@@ -1,0 +1,27 @@
+---
+# Rôle kubernetes — Test de connectivité au cluster K8s
+# Exécuté en tant que l'utilisateur jarod pour valider le kubeconfig déployé
+
+- name: Tester la connectivité au cluster K8s
+  ansible.builtin.command:
+    cmd: kubectl get nodes --no-headers
+  become: true
+  become_user: "{{ jarod_user }}"
+  register: kubectl_test
+  changed_when: false
+  retries: 3
+  delay: 5
+  until: kubectl_test.rc == 0
+  environment:
+    KUBECONFIG: "{{ kube_config_file }}"
+
+- name: Valider que kubectl get nodes a réussi (rc=0)
+  ansible.builtin.assert:
+    that:
+      - kubectl_test.rc == 0
+    fail_msg: "Échec de la connectivité K8s — kubectl get nodes a retourné rc={{ kubectl_test.rc }}"
+    success_msg: "Connectivité K8s OK — Nœuds : {{ kubectl_test.stdout_lines }}"
+
+- name: Afficher les nœuds du cluster (validation)
+  ansible.builtin.debug:
+    msg: "Connectivité K8s OK — Nœuds : {{ kubectl_test.stdout_lines }}"

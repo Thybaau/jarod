@@ -12,5 +12,5 @@
       tags: [system]
     - role: hermes
       tags: [hermes]
-    # - role: kubernetes    # Story 3.2
-    #   tags: [kubernetes]
+    - role: kubernetes
+      tags: [kubernetes]

@@ -1,0 +1,25 @@
+---
+# Valeurs par défaut — rôle kubernetes
+# Déploiement du kubeconfig et validation de la connectivité K8s
+
+# === Paths ===
+kube_dir: "{{ jarod_home }}/.kube"
+kube_config_file: "{{ jarod_home }}/.kube/config"
+kube_dir_mode: "0700"
+kube_config_mode: "0600"
+
+# === Cluster ===
+kube_cluster_name: homelab-k3s
+kube_context_name: jarod@homelab-k3s
+kube_user_name: jarod
+
+# === API Server (depuis group_vars/all.yml) ===
+# k8s_master_ip: déjà défini dans group_vars/all.yml (192.168.1.102)
+# k8s_api_port: déjà défini dans group_vars/all.yml (6443)
+
+# === kubectl ===
+kubectl_version: "v1.30.3"
+
+# === Secrets (injectés via --extra-vars, JAMAIS de valeur par défaut) ===
+# jarod_sa_token: <injecté depuis GitHub Secrets JAROD_K8S_SA_TOKEN>
+# k8s_ca_data: <injecté depuis GitHub Secrets K8S_CA_DATA>

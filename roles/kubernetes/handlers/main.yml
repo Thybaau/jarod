@@ -1,0 +1,4 @@
+---
+# Handlers — rôle kubernetes
+# Aucun service à redémarrer pour le kubeconfig
+# (Hermes utilise kubectl en subprocess, pas de connexion persistante)
