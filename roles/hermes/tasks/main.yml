@@ -18,6 +18,10 @@
   ansible.builtin.include_tasks: soul.yml
   tags: [hermes, soul]
 
+- name: Seed mémoire initiale
+  ansible.builtin.include_tasks: memory.yml
+  tags: [hermes, memory]
+
 - name: Configurer le service systemd
   ansible.builtin.include_tasks: systemd.yml
   tags: [hermes, systemd]

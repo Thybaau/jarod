@@ -1,0 +1,5 @@
+Cluster k3s 2 noeuds (k3s-1 192.168.1.102, k3s-2 192.168.1.103) sur Proxmox, déployé via ArgoCD. Namespace principal : default. Stack monitoring : Prometheus + Grafana + Alertmanager + Loki.
+§Services hébergés : Valhafin (app web, PostgreSQL), Homepage dashboard. Exposés via Traefik avec cert wildcard *.caremelle.org (Cloudflare).
+§JAROD tourne sur VM dédiée 192.168.1.150 (Ubuntu 24.04, 4 Go RAM, 40 Go disque). Indépendant du cluster — survit aux pannes k3s.
+§Repo infra : homelab-infra-iac (Terraform), homelab-cluster (Helm+ArgoCD), jarod (Ansible). GitHub Actions CI/CD sur self-hosted runner.
+§Alerting : Alertmanager → Discord webhooks (salons #alertes-critiques, #alertes-monitoring). ArgoCD notifications → #argocd. Renovate → #renovate-updates.

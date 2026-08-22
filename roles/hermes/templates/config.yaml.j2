@@ -32,6 +32,37 @@ approvals:
 security:
   allow_private_urls: true
 
+# === Mémoire persistante ===
+memory:
+  memory_enabled: {{ hermes_memory_enabled | lower }}
+  user_profile_enabled: {{ hermes_memory_user_profile_enabled | lower }}
+  memory_char_limit: {{ hermes_memory_char_limit }}
+  user_char_limit: {{ hermes_memory_user_char_limit }}
+  write_approval: {{ hermes_memory_write_approval | lower }}
+
+# === Skills et apprentissage ===
+skills:
+  write_approval: {{ hermes_skills_write_approval | lower }}
+{% if hermes_skills_external_dirs %}
+  external_dirs:
+{% for dir in hermes_skills_external_dirs %}
+    - "{{ dir }}"
+{% endfor %}
+{% endif %}
+
+# === Background review (auto-apprentissage post-turn) ===
+auxiliary:
+  background_review:
+    enabled: {{ hermes_background_review_enabled | lower }}
+{% if hermes_background_review_provider %}
+    provider: "{{ hermes_background_review_provider }}"
+    model: "{{ hermes_background_review_model }}"
+{% endif %}
+
+# === Notifications mémoire ===
+display:
+  memory_notifications: "{{ hermes_display_memory_notifications }}"
+
 # === Recherche web ===
 web:
   search_backend: tavily

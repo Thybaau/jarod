@@ -80,3 +80,22 @@ hermes_stt_initial_prompt: "JAROD"
 hermes_tts_provider: "edge"
 hermes_tts_speed: 1.0
 hermes_tts_edge_voice: "fr-FR-HenriNeural"
+
+# === Mémoire persistante ===
+hermes_memory_enabled: true
+hermes_memory_user_profile_enabled: true
+hermes_memory_char_limit: 2200
+hermes_memory_user_char_limit: 1375
+hermes_memory_write_approval: false
+
+# === Skills et apprentissage ===
+hermes_skills_write_approval: false
+hermes_skills_external_dirs: []
+
+# === Background review (auto-apprentissage) ===
+hermes_background_review_enabled: true
+hermes_background_review_provider: ""
+hermes_background_review_model: ""
+
+# === Notifications mémoire ===
+hermes_display_memory_notifications: "on"

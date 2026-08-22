@@ -1,0 +1,34 @@
+---
+# Mémoire initiale (seed uniquement si fichier absent)
+
+- name: Créer le répertoire memories
+  ansible.builtin.file:
+    path: "{{ hermes_data_dir }}/memories"
+    state: directory
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0755"
+  become: true
+  tags: [hermes]
+
+- name: Seed MEMORY.md (uniquement si absent)
+  ansible.builtin.template:
+    src: memory.md.j2
+    dest: "{{ hermes_data_dir }}/memories/MEMORY.md"
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0644"
+    force: false
+  become: true
+  tags: [hermes]
+
+- name: Seed USER.md (uniquement si absent)
+  ansible.builtin.template:
+    src: user.md.j2
+    dest: "{{ hermes_data_dir }}/memories/USER.md"
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0644"
+    force: false
+  become: true
+  tags: [hermes]
