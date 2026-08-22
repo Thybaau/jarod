@@ -65,6 +65,11 @@ hermes_discord_home_channel_id: ""
 hermes_discord_home_channel_name: ""
 hermes_discord_server_id: ""
 
+# === Discord — Commandes slash et channel overrides ===
+hermes_discord_command_sync_policy: "safe"
+hermes_discord_channel_prompts: {}
+hermes_discord_admin_user_id: ""
+
 # === Voice — Speech-to-Text ===
 hermes_stt_provider: "local"
 hermes_stt_language: "fr"

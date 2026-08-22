@@ -44,6 +44,14 @@ discord:
 {% if hermes_discord_free_response_channels %}
   free_response_channels: "{{ hermes_discord_free_response_channels }}"
 {% endif %}
+# === Prompts système par salon (éphémères, non persistés dans le transcript) ===
+{% if hermes_discord_channel_prompts %}
+  channel_prompts:
+{% for channel_id, prompt in hermes_discord_channel_prompts.items() %}
+    "{{ channel_id }}": |
+      {{ prompt | indent(6) }}
+{% endfor %}
+{% endif %}
 
 # === Canal home Discord ===
 {% if hermes_discord_home_channel_id %}

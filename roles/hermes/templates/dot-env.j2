@@ -29,3 +29,9 @@ DISCORD_FREE_RESPONSE_CHANNELS={{ hermes_discord_free_response_channels }}
 {% if hermes_discord_home_channel %}
 DISCORD_HOME_CHANNEL={{ hermes_discord_home_channel }}
 {% endif %}
+
+# === Discord — Commandes slash ===
+DISCORD_COMMAND_SYNC_POLICY={{ hermes_discord_command_sync_policy }}
+{% if hermes_discord_admin_user_id %}
+DISCORD_ADMIN_FROM={{ hermes_discord_admin_user_id }}
+{% endif %}
