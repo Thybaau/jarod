@@ -15,6 +15,7 @@ WorkingDirectory={{ hermes_home }}
 Environment="HOME={{ hermes_home }}"
 Environment="PATH={{ hermes_home }}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 EnvironmentFile={{ hermes_env_file }}
+Environment="KUBECONFIG={{ jarod_home }}/.kube/config"
 ExecStart={{ hermes_bin }} {{ hermes_gateway_command }}
 Restart=on-failure
 RestartSec={{ hermes_restart_sec }}
