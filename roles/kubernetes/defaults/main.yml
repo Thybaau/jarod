@@ -18,7 +18,7 @@ kube_user_name: jarod
 # k8s_api_port: déjà défini dans group_vars/all.yml (6443)
 
 # === kubectl ===
-kubectl_version: "v1.30.3"
+kubectl_version: "v1.36.3"
 
 # === Secrets (injectés via --extra-vars, JAMAIS de valeur par défaut) ===
 # jarod_sa_token: <injecté depuis GitHub Secrets JAROD_K8S_SA_TOKEN>
