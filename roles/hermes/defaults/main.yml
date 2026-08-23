@@ -106,6 +106,6 @@ hermes_dashboard_host: "192.168.1.150"
 hermes_dashboard_port: 9119
 hermes_dashboard_service_name: hermes-dashboard
 hermes_dashboard_service_file: "/etc/systemd/system/hermes-dashboard.service"
-hermes_dashboard_memory_max: "512M"
+hermes_dashboard_memory_max: "1536M"
 hermes_dashboard_basic_auth_username: "jarod"
 hermes_dashboard_basic_auth_password: ""

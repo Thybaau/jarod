@@ -15,6 +15,7 @@ WorkingDirectory={{ hermes_home }}
 Environment="HOME={{ hermes_home }}"
 Environment="PATH={{ hermes_home }}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 EnvironmentFile={{ hermes_env_file }}
+Environment="NODE_OPTIONS=--max-old-space-size=1024"
 ExecStart={{ hermes_bin }} dashboard --host {{ hermes_dashboard_host }} --port {{ hermes_dashboard_port }} --no-open
 Restart=on-failure
 RestartSec={{ hermes_restart_sec }}
