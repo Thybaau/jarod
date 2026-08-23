@@ -22,3 +22,29 @@
     enabled: true
     state: started
   become: true
+
+# === Dashboard ===
+
+- name: Déployer le service unit hermes-dashboard
+  ansible.builtin.template:
+    src: hermes-dashboard.service.j2
+    dest: "{{ hermes_dashboard_service_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart hermes-dashboard
+  when: hermes_dashboard_enabled | bool
+
+- name: Recharger la configuration systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
+- name: Activer et démarrer le service hermes-dashboard
+  ansible.builtin.systemd:
+    name: "{{ hermes_dashboard_service_name }}"
+    enabled: true
+    state: started
+  become: true
+  when: hermes_dashboard_enabled | bool
