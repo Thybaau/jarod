@@ -51,7 +51,7 @@ jobs:
           chmod 600 ~/.ssh/jarod_deploy_key
 
           cat >> ~/.ssh/config <<EOF
-          Host 192.168.1.150 jarod-vm
+          Host 192.168.0.150 jarod-vm
             User jarod
             IdentityFile ~/.ssh/jarod_deploy_key
             StrictHostKeyChecking no
@@ -105,6 +105,6 @@ jobs:
         if: always()
         run: |
           rm -f ~/.ssh/jarod_deploy_key
-          sed -i '/Host 192.168.1.150 jarod-vm/,/UserKnownHostsFile/d' ~/.ssh/config 2>/dev/null || true
+          sed -i '/Host 192.168.0.150 jarod-vm/,/UserKnownHostsFile/d' ~/.ssh/config 2>/dev/null || true
           rm -rf .venv
           echo "✓ SSH key and virtual environment cleaned up"
