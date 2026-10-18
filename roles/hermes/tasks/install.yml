@@ -54,7 +54,12 @@
     PATH: "{{ hermes_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
   changed_when: false
   register: hermes_doctor_result
-  failed_when: hermes_doctor_result.rc != 0
+  failed_when: hermes_doctor_result.rc > 1
+
+- name: Signaler les points d'attention remontés par Hermes
+  ansible.builtin.debug:
+    msg: "{{ hermes_doctor_result.stdout_lines | select('search', '⚠') | list }}"
+  when: hermes_doctor_result.rc == 1
 
 - name: Installer les extras Python messaging/voice (discord.py[voice], PyNaCl)
   ansible.builtin.command:
