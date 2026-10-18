@@ -7,10 +7,10 @@ jarod_user: jarod
 jarod_home: /home/jarod
 
 # === Réseau ===
-jarod_vm_ip: "192.168.1.150"
-lan_subnet: "192.168.1.0/24"
-traefik_ip: "192.168.1.151"
-k8s_master_ip: "192.168.1.102"
+jarod_vm_ip: "192.168.0.150"
+lan_subnet: "192.168.0.0/24"
+traefik_ip: "192.168.0.151"
+k8s_master_ip: "192.168.0.102"
 k8s_api_port: 6443
 home_assistant_port: 8123
 hermes_dashboard_port: 9119

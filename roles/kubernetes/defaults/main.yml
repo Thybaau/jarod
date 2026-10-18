@@ -14,7 +14,7 @@ kube_context_name: jarod@homelab-k3s
 kube_user_name: jarod
 
 # === API Server (depuis group_vars/all.yml) ===
-# k8s_master_ip: déjà défini dans group_vars/all.yml (192.168.1.102)
+# k8s_master_ip: déjà défini dans group_vars/all.yml (192.168.0.102)
 # k8s_api_port: déjà défini dans group_vars/all.yml (6443)
 
 # === kubectl ===
