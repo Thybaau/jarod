@@ -100,6 +100,7 @@ jobs:
           JAROD_K8S_SA_TOKEN: ${{ secrets.JAROD_K8S_SA_TOKEN }}
           K8S_CA_DATA: ${{ secrets.K8S_CA_DATA }}
           HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: ${{ secrets.HERMES_DASHBOARD_BASIC_AUTH_PASSWORD }}
+          ARCHER_ADMIN_PASSWORD: ${{ secrets.ARCHER_ADMIN_PASSWORD }}
 
       - name: Cleanup SSH key and virtual env
         if: always()

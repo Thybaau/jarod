@@ -41,3 +41,9 @@ DISCORD_ADMIN_FROM={{ hermes_discord_admin_user_id }}
 HERMES_DASHBOARD_BASIC_AUTH_USERNAME={{ hermes_dashboard_basic_auth_username }}
 HERMES_DASHBOARD_BASIC_AUTH_PASSWORD={{ hermes_dashboard_basic_auth_password }}
 {% endif %}
+
+# === Routeur Archer BE9300 (lecture seule) ===
+ARCHER_ADMIN_URL={{ archer_admin_url }}
+{% if archer_admin_password %}
+ARCHER_ADMIN_PASSWORD=*** archer_admin_password }}
+{% endif %}

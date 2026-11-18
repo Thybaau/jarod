@@ -109,3 +109,7 @@ hermes_dashboard_service_file: "/etc/systemd/system/hermes-dashboard.service"
 hermes_dashboard_memory_max: "1536M"
 hermes_dashboard_basic_auth_username: "jarod"
 hermes_dashboard_basic_auth_password: ""
+
+# === Routeur Archer BE9300 (192.168.0.1) — accès en lecture seule ===
+archer_admin_url: "http://192.168.0.1"
+archer_admin_password: "{{ lookup('env', 'ARCHER_ADMIN_PASSWORD') | default('', true) }}"
